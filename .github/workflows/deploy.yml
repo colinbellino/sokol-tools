@@ -37,6 +37,17 @@ jobs:
         name: osx-x64-ninja-release
         path: fips-files/deploy/sokol-tools/osx-x64-ninja-release/sokol-shdc
         retention-days: 1
+    # TODO: remove this
+    - name: build (debug)
+      run: |
+        python3 fips set local on
+        python3 fips build osx-x64-ninja-debug
+    - name: upload (debug)
+      uses: actions/upload-artifact@v4
+      with:
+        name: osx-x64-ninja-debug
+        path: fips-files/deploy/sokol-tools/osx-x64-ninja-debug/sokol-shdc
+        retention-days: 1
   mac_arm:
     runs-on: macos-latest
     steps:
