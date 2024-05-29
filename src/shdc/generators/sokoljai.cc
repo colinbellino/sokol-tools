@@ -174,7 +174,7 @@ void SokolJaiGenerator::gen_struct_interior_decl_std430(const GenInput& gen, con
         cur_offset += item.size;
     }
     if (cur_offset < pad_to_size) {
-        l("_: [{}]u8,\n", pad_to_size - cur_offset);
+        l("_: [{}]u8;\n", pad_to_size - cur_offset);
     }
 }
 
@@ -298,11 +298,11 @@ void SokolJaiGenerator::gen_shader_desc_func(const GenInput& gen, const ProgramR
 
 void SokolJaiGenerator::gen_shader_array_start(const GenInput& gen, const std::string& array_name, size_t num_bytes, Slang::Enum slang) {
     // TODO: make this file scope?
-    l("{} := [{}]u8 {{\n", array_name, num_bytes);
+    l("{} := u8.[\n", array_name, num_bytes);
 }
 
 void SokolJaiGenerator::gen_shader_array_end(const GenInput& gen) {
-    l("\n}}\n");
+    l("\n];\n");
 }
 
 std::string SokolJaiGenerator::lang_name() {
@@ -444,23 +444,23 @@ std::string SokolJaiGenerator::storage_buffer_bind_slot_name(const StorageBuffer
 }
 
 std::string SokolJaiGenerator::vertex_attr_definition(const std::string& snippet_name, const StageAttr& attr) {
-    return fmt::format("{} :: {}", vertex_attr_name(snippet_name, attr), attr.slot);
+    return fmt::format("{} :: {};", vertex_attr_name(snippet_name, attr), attr.slot);
 }
 
 std::string SokolJaiGenerator::image_bind_slot_definition(const Image& img) {
-    return fmt::format("{} :: {}", image_bind_slot_name(img), img.slot);
+    return fmt::format("{} :: {};", image_bind_slot_name(img), img.slot);
 }
 
 std::string SokolJaiGenerator::sampler_bind_slot_definition(const Sampler& smp) {
-    return fmt::format("{} :: {}", sampler_bind_slot_name(smp), smp.slot);
+    return fmt::format("{} :: {};", sampler_bind_slot_name(smp), smp.slot);
 }
 
 std::string SokolJaiGenerator::uniform_block_bind_slot_definition(const UniformBlock& ub) {
-    return fmt::format("{} :: {}", uniform_block_bind_slot_name(ub), ub.slot);
+    return fmt::format("{} :: {};", uniform_block_bind_slot_name(ub), ub.slot);
 }
 
 std::string SokolJaiGenerator::storage_buffer_bind_slot_definition(const StorageBuffer& sbuf) {
-    return fmt::format("{} :: {}", storage_buffer_bind_slot_name(sbuf), sbuf.slot);
+    return fmt::format("{} :: {};", storage_buffer_bind_slot_name(sbuf), sbuf.slot);
 }
 
 } // namespace
